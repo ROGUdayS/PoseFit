@@ -1,0 +1,46 @@
+// Initialization of variables
+var stage = 1
+var count = 0
+var correct = 0
+var incorrect = 0
+var check = true
+
+fun checkExercise(angleAtLHip: Double, angleAtLKnee: Double) {
+    // Check if the exercise is in the standing/straight position
+    if (angleAtLHip > 174 && angleAtLKnee > 174) {
+        if (stage == 1) {
+            stage = 0
+            count += 1
+
+            if (check) {
+                correct += 1
+            } else {
+                incorrect += 1
+                check = true  // Reset check flag for the next repetition
+            }
+        }
+    }
+
+    // Check if the exercise is in the bent position
+    if (angleAtLHip < 85) {
+        stage = 1
+
+        if (check && angleAtLHip <= 60) {
+            check = false  // Set check to false to indicate incorrect form
+            println("Do not bend your spine")
+
+            if (angleAtLKnee < 125) {
+                println("Maintain tension at hamstrings")
+            }
+        }
+    }
+}
+
+// Example usage
+fun main() {
+    val angleAtLHip = 170.0
+    val angleAtLKnee = 180.0
+    checkExercise(angleAtLHip, angleAtLKnee)
+    
+    println("Count: $count, Correct: $correct, Incorrect: $incorrect")
+}
